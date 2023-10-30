@@ -123,7 +123,8 @@ img {
 
 .incoming_msg_img {
     display: inline-block;
-    width: 6%;
+    width: 3%;
+    margin-top: 10px;
 }
 
 .received_msg {

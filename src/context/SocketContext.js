@@ -4,6 +4,7 @@ import { AuthContext } from '../auth/AuthContext';
 import { useSocket } from '../hooks/useSocket'
 import { ChatContext } from './chat/ChatContext';
 import { types } from '../types/types';
+import { scrollToBottomAnimated } from '../helpers/scrollToBottom';
 
 export const SocketContext = createContext();
 
@@ -36,6 +37,20 @@ export const SocketProvider = ({ children }) => {
             });
         });
     }, [socket, dispatch]);
+
+    //*
+    useEffect(() => {
+        socket?.on('mensaje-personal', (mensaje) => {
+            // Dispatch de una acción
+            dispatch({
+                type: types.nuevoMensaje,
+                payload: mensaje
+            });
+            // TODO mover el scroll al final
+            scrollToBottomAnimated('mensajes');
+        });
+    }, [socket, dispatch]);
+
 
     return (
         <SocketContext.Provider value={{ socket, online }}>
